@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koenigt-helloworld-backend
+  namespace: koenigt
+  labels:
+    app.kubernetes.io/name: koenigt-helloworld-backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/project: cxp
+    app.kubernetes.io/version: 1.0.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: koenigt-helloworld-backend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: koenigt-helloworld-backend
+    spec:
+      containers:
+        - name: koenigt-helloworld
+          image: docker.at41tools.k8s.aws.msgoat.eu/cxp/wildfly-helloworld:1.0.0-koenigt
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: management
+              containerPort: 9990
+              protocol: TCP
